@@ -18,6 +18,18 @@ export function NewRoutePage() {
       sourceResponse.json(),
       destinationResponse.json(),
     ])
+
+    if (sourcePlace.status !== 'OK') {
+      console.error(sourcePlace)
+      alert('Origem não encontrada')
+      return
+    }
+
+    if (destinationPlace.status !== 'OK') {
+      console.error(destinationPlace)
+      alert('Destino não encontrado')
+      return
+    }
   }
 
   return (
