@@ -1,5 +1,6 @@
 'use client'
 
+import type { FindPlaceFromTextResponseData } from "@googlemaps/google-maps-services-js"
 import { FormEvent } from "react"
 
 export function NewRoutePage() {
@@ -13,7 +14,7 @@ export function NewRoutePage() {
       fetch(`http://localhost:3000/places?text=${destination}`),
     ])
 
-    const [sourcePlace, destinationPlace] = await Promise.all([
+    const [sourcePlace, destinationPlace]: FindPlaceFromTextResponseData[] = await Promise.all([
       sourceResponse.json(),
       destinationResponse.json(),
     ])
