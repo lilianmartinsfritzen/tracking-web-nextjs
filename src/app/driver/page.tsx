@@ -36,6 +36,16 @@ export function DriverPage() {
         position: route.directions.routes[0].legs[0].start_location,
       },
     });
+
+    const { steps } = route.directions.routes[0].legs[0];
+
+    for (const step of steps) {
+      await sleep(2000);
+      map?.moveCar(routeId, step.start_location);
+
+      await sleep(2000);
+      map?.moveCar(routeId, step.end_location);
+    }
   }
 
   return (
@@ -73,3 +83,5 @@ export function DriverPage() {
 }
 
 export default DriverPage;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
