@@ -30,6 +30,14 @@ export function NewRoutePage() {
       alert('Destino não encontrado')
       return
     }
+
+    const placeSourceId = sourcePlace.candidates[0].place_id
+    const placeDestinationId = destinationPlace.candidates[0].place_id
+
+    const directionsResponse = await fetch(
+      `http://localhost:3000/directions?originId=${placeSourceId}&destinationId=${placeDestinationId}`
+    )
+    const directionsData = await directionsResponse.json()
   }
 
   return (
