@@ -1,6 +1,9 @@
 "use client";
 
-import type { FindPlaceFromTextResponseData } from "@googlemaps/google-maps-services-js";
+import type {
+  DirectionsResponseData,
+  FindPlaceFromTextResponseData,
+} from "@googlemaps/google-maps-services-js";
 import { FormEvent, useRef } from "react";
 import { useMap } from "../hooks/useMap";
 
@@ -42,7 +45,21 @@ export function NewRoutePage() {
     const directionsResponse = await fetch(
       `http://localhost:3000/directions?originId=${placeSourceId}&destinationId=${placeDestinationId}`
     );
-    const directionsData = await directionsResponse.json();
+    const directionsData: DirectionsResponseData & { request: any } =
+      await directionsResponse.json();
+    map?.removeAllRoutes();
+    await map?.addRouteWithIcons({
+      routeId: "1",
+      startMarkerOptions: {
+        position: directionsData.routes[0].legs[0].start_location,
+      },
+      endMarkerOptions: {
+        position: directionsData.routes[0].legs[0].end_location,
+      },
+      carMarkerOptions: {
+        position: directionsData.routes[0].legs[0].start_location,
+      },
+    });
   }
 
   return (
